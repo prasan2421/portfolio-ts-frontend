@@ -20,8 +20,9 @@ module.exports = {
     return config
   },
 
-  images: {
-    loader: 'imgix',
-    path: '/',
-  },
+  experimental: {
+    images: {
+        unoptimized: true
+    }
+}
 }
