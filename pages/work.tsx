@@ -450,7 +450,7 @@ theme={theme}
                 Work Experience
               </Typography>
               {EducationData.map((text, index) => (
-                <Box sx={{display:{sm:'flex'}, marginY:'15px',}}>
+                <Box  key={index} sx={{display:{sm:'flex'}, marginY:'15px',}}>
                   <Box sx={{width:{xs:'100%',sm:'auto'},marginRight:'10px',justifyContent:'center', alignItems:'center',display:{xs:'flex',sm:'block'}}}>
                  
                     <Image

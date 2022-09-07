@@ -38,7 +38,7 @@ import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { styled } from "@mui/material/styles";
 import useBreakpoint from 'use-breakpoint';
-import Move from "./Move.tsx";
+import Move from "./Move";
 const drawerWidth = 150;
 
 const name = 'Prasanna Tuladhar';
@@ -324,7 +324,7 @@ export default function Layout({ children, home }: {
             open={swipabledrawer}
             onClose={toggleDrawer(false)}
             sx={{display:{ md: 'none'}}}
-            // onOpen={toggleDrawer(anchor, true)}
+            onOpen={toggleDrawer(true)}
             
           >
             <Box sx={{height:'100vh', justifyContent:'space-between', display:'flex', flexDirection:'column'}}>

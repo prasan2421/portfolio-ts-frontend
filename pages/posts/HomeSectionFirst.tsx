@@ -16,14 +16,14 @@ import Stack from '@mui/material/Stack';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
-import Move from "../../components/Move.tsx";
+import Move from "../../components/Move";
 // import {Link as Link2} from '@mui/material/Link';
 
 import {Grid, Box, Slide, Grow, Typography, Button, IconButton} from '@mui/material';
 import { styled, alpha, ThemeProvider, createTheme, useTheme,responsiveFontSizes, } from '@mui/material/styles';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import DownloadIcon from '@mui/icons-material/Download';
-import path from "../../public/files/PrasannaCV.pdf";
+
 
 const CustomButton = styled(Button)({
  
@@ -169,7 +169,7 @@ export default function HomeSectionFirst(
         <Fade in={openEmoji}>
           <Box sx={style}>
             <Typography id="transition-modal-title" variant="h6" component="h2">
-              What's your reaction? (Select one or more)
+              What&apos;s your reaction? (Select one or more)
             </Typography>
             <Stack direction="row" alignItems="center" spacing={2}>
               <IconButton color="primary" aria-label="upload picture" component="label">
@@ -245,7 +245,9 @@ export default function HomeSectionFirst(
                   sx={{width:{xs:'inherit'},borderLeft:'2px solid lightgray',borderColor:"inherit", }} 
                   // download underline="none"
                   >
-                    <Link href={'files/PrasannaCV.pdf'} sx={utilStyles.downloadButton,{color:"inherit"}}
+                    <Link href={'files/PrasannaCV.pdf'} sx={
+                    {color:"inherit"}
+                  }
                     >
                       <CustomButton 
                       // onClick={downloadFile} 

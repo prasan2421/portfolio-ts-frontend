@@ -45,7 +45,7 @@ export default function Home({
   
   return (
    
-    <ThemeProvider theme={theme} home>
+    <ThemeProvider theme={theme} >
     
       <Head>
         <title>{siteTitle}</title>

@@ -198,8 +198,8 @@ const style = {
 
 
 
-export default function  about(){
-  
+export default function  About(){
+  const theme = useTheme();
 
   useEffect(()=>{
     window.scrollTo(0,0)
@@ -315,7 +315,7 @@ export default function  about(){
   //   setAnchorEl(null);
   // };
 
-  const theme = useTheme();
+
   
   return (
     <ThemeProvider 
@@ -344,7 +344,7 @@ theme={theme}
              
             </Box>
             <Box className={styles.subTitle}>
-            <Typography variant="h5"><b style={{color:'turquoise'}}>Hello! I'm Prasanna.</b> I'm a Web / Mobile application development professional involved in the development of various applications throughout my few years of involvement in the field. I have a background in Computer science and Information Technologies and Information Systems.</Typography>
+            <Typography variant="h5"><b style={{color:'turquoise'}}>Hello! I&apos;m Prasanna.</b> I&apos;m a Web / Mobile application development professional involved in the development of various applications throughout my few years of involvement in the field. I have a background in Computer science and Information Technologies and Information Systems.</Typography>
             
               </Box>
                 <Box >
@@ -378,7 +378,7 @@ theme={theme}
                 Personal Details
               </Typography>
               {PersonalData.map((text, index) => (
-                <Box sx={{marginTop:'10px'}}>
+                <Box key={index} sx={{marginTop:'10px'}}>
                   
                     <Typography gutterBottom variant="body2" component="div">
                 {text.title}
@@ -404,7 +404,7 @@ theme={theme}
               <Grid container >
               {InterestData.map((text, index) => (
                  
-                <Grid xs={6} sm={6} md={3} sx={{display:'flex',justifyContent:'center'}}>
+                <Grid key={index} xs={6} sm={6} md={3} sx={{display:'flex',justifyContent:'center'}}>
                 <Box sx={{ marginY:'15px', }}>
                   <Box sx={{    justifyContent: 'center',display: 'flex'}}>
                   <Image
@@ -445,7 +445,7 @@ theme={theme}
                 Education
               </Typography>
               {EducationData.map((text, index) => (
-                <Box sx={{display:{sm:'flex'}, marginY:'15px',}}>
+                <Box key={index} sx={{display:{sm:'flex'}, marginY:'15px',}}>
                   <Box sx={{width:{xs:'100%',sm:'auto'},justifyContent:'center',marginRight:'10px', alignItems:'center',display:{xs:'flex',sm:'block'}}}>
                  
                     <Image
@@ -483,7 +483,7 @@ theme={theme}
                 Trainings
               </Typography>
               {TrainingData.map((text, index) => (
-                <Box sx={{display:{sm:'flex'}, marginY:'15px',}}>
+                <Box key={index} sx={{display:{sm:'flex'}, marginY:'15px',}}>
                   <Box sx={{width:{xs:'100%',sm:'auto'},marginRight:'10px',justifyContent:'center', alignItems:'center',display:{xs:'flex',sm:'block'}}}>
                  
                     <Image
@@ -523,7 +523,7 @@ theme={theme}
               <Grid container >
               {LanguageData.map((text, index) => (
                  
-                <Grid xs={6} sm={6} md={3} sx={{display:'flex',justifyContent:'center'}}>
+                <Grid key={index} xs={6} sm={6} md={3} sx={{display:'flex',justifyContent:'center'}}>
                 <Box sx={{ marginY:'15px', }}>
                   <Box >
                   

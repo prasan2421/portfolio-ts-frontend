@@ -508,7 +508,7 @@ theme={theme}
               <Grid container >
               {InterpersonalData.map((text, index) => (
                 
-                <Grid xs={6} sm={6} md={3} sx={{display:'flex',justifyContent:'center'}}>
+                <Grid key={index} xs={6} sm={6} md={3} sx={{display:'flex',justifyContent:'center'}}>
                   <CardActionArea sx={{borderRadius:'20px',overflow:'hidden'}}>
                 <Box sx={{ marginY:'15px', }}>
                   <Box sx={{    justifyContent: 'center',
@@ -549,7 +549,7 @@ theme={theme}
               <Grid container >
               {InterestData.map((text, index) => (
                  
-                 <Grid xs={6} sm={6} md={3} sx={{display:'flex',justifyContent:'center'}}>
+                 <Grid  key={index} xs={6} sm={6} md={3} sx={{display:'flex',justifyContent:'center'}}>
                  <CardActionArea sx={{borderRadius:'20px',overflow:'hidden'}}>
                <Box sx={{ marginY:'15px', }}>
                  <Box sx={{    justifyContent: 'center',
@@ -588,7 +588,7 @@ theme={theme}
               </Typography>
               <Grid container >
               {HardData.map((text, index) => (
-                <Grid xs={6} sm={6} md={3} sx={{display:'flex',justifyContent:'center'}}>
+                <Grid  key={index} xs={6} sm={6} md={3} sx={{display:'flex',justifyContent:'center'}}>
                 <CardActionArea sx={{borderRadius:'20px',overflow:'hidden'}}>
               <Box sx={{ marginY:'15px', }}>
                 <Box sx={{    justifyContent: 'center',

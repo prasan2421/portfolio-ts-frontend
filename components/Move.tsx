@@ -6,7 +6,9 @@ const Move = ({ children, ...animationConfig }) => {
   const [style, trigger] = useMove(animationConfig);
 
   return (
-    <animated.div style={style} onMouseEnter={trigger} onClick={trigger}>
+    <animated.div 
+    // style={style} onMouseEnter={()=>trigger()} onClick={()=>trigger()}
+    >
       {children}
     </animated.div>
   );

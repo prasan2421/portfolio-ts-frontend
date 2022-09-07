@@ -457,7 +457,7 @@ theme={theme}
                 
                 </Box> */}
                 <Box className='subTitle'>
-                <Typography variant="body1">I'm interested in part time / full time or freelance work opportunities- especially ambitious or large projects. However, if you have other request or question, don't hesitate to use the form.</Typography>
+                <Typography variant="body1">I&apos;m interested in part time / full time or freelance work opportunities- especially ambitious or large projects. However, if you have other request or question, don&apos;t hesitate to use the form.</Typography>
                   </Box>
                   <Box className='formBelow'>
                   <TextField id="outlined-basic" label="Name" variant="outlined" style={{ width:'50%', marginBottom:'10px' , paddingRight:'5px'}}/>
