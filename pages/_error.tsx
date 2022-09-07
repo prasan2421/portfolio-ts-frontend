@@ -5,7 +5,7 @@ function Error({ statusCode }) {
         <Layout>
       <p>
         {statusCode
-          ? `An error ${statusCode} occurred on server. Please try`
+          ? `An error ${statusCode} occurred on server. Please try again.`
           : 'An error occurred on client'}
       </p>
       </Layout>
