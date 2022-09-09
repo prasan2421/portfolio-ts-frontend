@@ -4,6 +4,7 @@ import Image from 'next/image';
 import styles from './layout.module.css';
 import utilStyles from '../styles/utils.module.css';
 import Link from 'next/link';
+import Alert from '@mui/material/Alert';
 import { useRouter } from 'next/router';
 import { StyledEngineProvider } from '@mui/material/styles';
 // import DancingLines from 'react-dancing-lines';
@@ -232,6 +233,10 @@ export default function Layout({ children, home }: {
         sx={{ background: 'transparent',  color:"inherit", boxShadow: 'none', width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
       >
         <Toolbar>
+          <Box  sx={{  flex:1, justifyContent:'left', display: 'flex' }}></Box>
+       
+        <Alert severity="info" sx={{justifyContent:'center',display:'flex',  borderRadius:'15px',}}>Portfolio under construction !!</Alert>
+       
         <Box  sx={{  flex:1, justifyContent:'right', display: 'flex' }}>
             <Box>
             
