@@ -39,6 +39,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { styled } from "@mui/material/styles";
 import useBreakpoint from 'use-breakpoint';
 import Move from "./Move";
+import Boop from "./Move";
 const drawerWidth = 150;
 
 const name = 'Prasanna Tuladhar';
@@ -218,7 +219,7 @@ export default function Layout({ children, home }: {
 
   return (
 
-    <StyledEngineProvider injectFirst>
+    <StyledEngineProvider>
     <Box sx={{ display: 'flex' }} >
 
 {/* {prefersDarkMode? 
@@ -264,6 +265,7 @@ export default function Layout({ children, home }: {
                <Move y={10}>
                 <AccountCircle />
                 </Move> 
+                
               </IconButton>
               <IconButton
                

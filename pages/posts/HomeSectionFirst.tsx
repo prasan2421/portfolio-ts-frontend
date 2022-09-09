@@ -260,7 +260,7 @@ export default function HomeSectionFirst(
                   <IconButton disableRipple
                   onClick={handleOpenEmoji}
                     color="primary" aria-label="upload picture" component="label" sx={{padding:0,margoin:0}}>
-                      <Move scale={1.5} springConfig={{ mass: 2, tension: 100, friction: 20 }} >
+                      <Move scale={1.5} springConfig={{ tension: 150, friction: 10 }} >
        
                         <AddReactionIcon   sx={{fontSize:'50px',color: '#ffd100',marginTop:'2px'}}/>
                      </Move>
