@@ -47,6 +47,33 @@ export function getAllPostIds() {
   })
 }
 
+
+
+
+
+export function getProjectsIds() {
+  const fileNames = fs.readdirSync(postsDirectory)
+  const posts= fileNames.map(fileName => {
+    const slug = fileName.replace(/\.md$/, '');
+    const readFile = fs.readFileSync(`posts/${fileName}`, 'utf-8');
+    const { data: frontmatter } = matter(readFile);
+
+    return {
+     slug,
+     frontmatter,
+      
+    }
+  })
+
+  return {
+    props: {
+      posts,
+    },
+  };
+}
+
+
+
 export async function getPostData(id: string) {
   const fullPath = path.join(postsDirectory, `${id}.md`)
   const fileContents = fs.readFileSync(fullPath, 'utf8')

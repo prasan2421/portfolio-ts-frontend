@@ -43,7 +43,7 @@ export default function HomeSectionFourth({  }: {  }) {
 
   return (
 
-    <Container maxWidth="xl" sx={{marginTop:'-5rem'}}>
+    <Container  maxWidth="xl" sx={{marginTop:'-5rem'}}>
      <Grid container > 
      {blogData.map((text, index) => (
       <Grid key={index} xs={6} sm={4}>

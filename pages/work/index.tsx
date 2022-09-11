@@ -1,5 +1,7 @@
 import React from "react";
-
+import fs from 'fs';
+import path from 'path'
+import matter from 'gray-matter';
 import { useEffect, useState, useRef,useMemo, useCallback } from "react";
 // import Announcement from "../components/Announcement";
 // import Categories from "../components/Categories";
@@ -26,7 +28,7 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import Send from '@mui/icons-material/Send';
 import Zoom from '@mui/material/Zoom';
 import Image from 'next/image'
-import BackgroundText from "../components/BackgroundText";
+import BackgroundText from "../../components/BackgroundText";
 // import Typography from '@mui/material/Typography';
 import Grow from '@mui/material/Grow';
 import Slide from '@mui/material/Slide';
@@ -44,27 +46,28 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea, CardActions } from '@mui/material';
-import styles from '../styles/About.module.css';
+import styles from '../../styles/About.module.css';
 import Alert from '@mui/material/Alert';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import TagSphere from "../components/wordSphere";
-import MyMaps from "../components/maps";
+import TagSphere from "../../components/wordSphere";
+import MyMaps from "../../components/maps";
 import { GoogleMap,LoadScript, useLoadScript, Marker } from "@react-google-maps/api";
 
  // import Swiper core and required modules
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import usn from '../assets/images/usn.png';
-import tic from '../assets/images/tic.png';
-import tu from '../assets/images/tu.png';
-import spn from '../assets/images/spn.png';
-import art from '../assets/images/art.png';
-import ballSports from '../assets/images/ballsports.png';
-import cycling from '../assets/images/cycling.png';
-import guitar from '../assets/images/guitar.png';
-import technology from '../assets/images/technology.png';
-import travel from '../assets/images/travel.png';
+import usn from '../../assets/images/usn.png';
+import tic from '../../assets/images/tic.png';
+import tu from '../../assets/images/tu.png';
+import spn from '../../assets/images/spn.png';
+import art from '../../assets/images/art.png';
+import ballSports from '../../assets/images/ballsports.png';
+import cycling from '../../assets/images/cycling.png';
+import guitar from '../../assets/images/guitar.png';
+import technology from '../../assets/images/technology.png';
+import travel from '../../assets/images/travel.png';
+
 
 // Import Swiper styles
 import 'swiper/css';
@@ -84,7 +87,37 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-
+const HardData=[
+  {'image':travel, 'title':'HTML', 'subtitle':'Basic','subField':['Nonverbal communication','Public speaking','Verbal Communication']},
+      {'image':ballSports, 'title':'CSS', 'subtitle':'Good','subField':['Conflict resolution','Constructive criticism','Counseling','Mediating','Problem-solving']},
+      {'image':technology, 'title':'Javascript', 'subtitle':'Good','subField':['Caring','Compassion','Diplomacy','Diversity','Helping others','Kindness','Patience','Respect','Sensitivity','Sympathy']},
+      {'image':art, 'title':'Typescript', 'subtitle':'Good','subField':['Encouraging',
+       'Inspiring trust',
+        'Instructing',
+        'Management',
+        'Mentoring',
+        'Motivation',
+        'Positive reinforcement']},
+      {'image':guitar, 'title':'Graphic Designing', 'subtitle':'Good','subField':['Active listening',
+        'Curiosity',
+        'Focus',
+        'Inquiry']},
+      {'image':cycling, 'title':'UI/UX designing', 'subtitle':'Good','subField':['Negotiating',
+        'Persuasion',
+        'Research']},
+      {'image':cycling, 'title':'PHP', 'subtitle':'Good','subField':['Behavioral skills',
+        'Developing rapport',
+        'Friendliness',
+        'Humor',
+        'Networking',
+        'Social skills']},
+      {'image':cycling, 'title':'Video Editing', 'subtitle':'Good','subField':['Collaboration',
+        'Group facilitating',
+        'Team building',
+        'Teamwork']},
+      
+      
+  ];
 
 const containerStyle = {
   width: '400px',
@@ -259,7 +292,7 @@ const CustomButton = styled(Button)({
 
 
 
-const Work = () => {
+const Work = ({posts}) => {
   const theme = useTheme();
 
   useEffect(()=>{
@@ -479,7 +512,48 @@ theme={theme}
           </CardActionArea>
         </Card>
       </Grid>
+
+
+      <Grid xs={12} >
       
+        <Card id="sectProjects" sx={{margin:'7px', borderTop:`2px solid lightgreen`}}>
+         
+            <CardContent>
+            <Typography gutterBottom variant="h5" component="div" color="lightgreen">
+                Projects
+              </Typography>
+              <Grid container >
+              {posts.map((text, index) => (
+                <Grid  key={index} xs={6} sm={6} md={3} sx={{display:'flex',justifyContent:'center'}}>
+                <CardActionArea sx={{borderRadius:'20px',overflow:'hidden'}}>
+              <Box sx={{ marginY:'15px', }}>
+                <Box sx={{    justifyContent: 'center',
+  display: 'flex'}}>
+                <Image
+                    // loader={myLoader}
+                    src={text.frontmatter.socialImage?`/${text.frontmatter.socialImage}`:technology}
+                    alt="Project"
+                    width={70}
+                    height={70}
+                  />
+                </Box>
+                  
+                  <Box sx={{marginY:'1rem', justifyContent:'center', display:'flex'}}>
+                    <Typography variant="body1" >
+                      {text.slug}
+                    </Typography>
+                    
+                   
+                  </Box>
+            </Box>
+            </CardActionArea>
+            </Grid>
+              ))}</Grid>
+            </CardContent>
+        
+        </Card>
+        
+      </Grid>
      </Grid>
      
    </Container>
@@ -520,3 +594,25 @@ theme={theme}
 };
 
 export default React.memo(Work);
+
+
+
+export async function getStaticProps() {
+  const files = fs.readdirSync('projects');
+
+  const posts = files.map((fileName) => {
+    const slug = fileName.replace('.md', '');
+    const readFile = fs.readFileSync(`projects/${fileName}`, 'utf-8');
+    const { data: frontmatter } = matter(readFile);
+    return {
+      slug,
+      frontmatter,
+    };
+  });
+
+  return {
+    props: {
+      posts,
+    },
+  };
+}

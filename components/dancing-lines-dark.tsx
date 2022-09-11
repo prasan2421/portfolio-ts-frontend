@@ -47,7 +47,7 @@ function DancingLinesDark(props: Props) {
       window.setTimeout(fn, 1000 / 60);
     };
 
-  const init = (event: MouseEvent | TouchEvent) => {
+  const init = (event: MouseEvent | window.TouchEvent) => {
     debug && console.log('init');
     document.removeEventListener('mousemove', init);
     document.removeEventListener('touchstart', init);
@@ -154,9 +154,9 @@ function DancingLinesDark(props: Props) {
     runningRef.current = false;
   };
 
-  const mousemove = (event: TouchEvent | MouseEvent) => {
+  const mousemove = (event: window.TouchEvent | MouseEvent) => {
     debug && console.log('mousemove');
-    if (event instanceof TouchEvent) {
+    if (typeof event === window.TouchEvent) {
       targetRef.current.x = event.touches[0].pageX;
       targetRef.current.y = event.touches[0].pageY;
     } else {
@@ -165,7 +165,7 @@ function DancingLinesDark(props: Props) {
     }
   };
 
-  const touchstart = (event: TouchEvent) => {
+  const touchstart = (event: window.TouchEvent) => {
     debug && console.log('touchstart');
     if (event.touches.length == 1) {
       targetRef.current.x = event.touches[0].pageX;
@@ -219,3 +219,4 @@ function DancingLinesDark(props: Props) {
 }
 
 export default DancingLinesDark;
+

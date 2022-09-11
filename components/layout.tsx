@@ -10,6 +10,8 @@ import { StyledEngineProvider } from '@mui/material/styles';
 // import DancingLines from 'react-dancing-lines';
 import IconButton from '@mui/material/IconButton';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import CircleIcon from '@mui/icons-material/Circle';
@@ -198,22 +200,27 @@ export default function Layout({ children, home }: {
   
   const drawerContentSocial=(
     <Box sx={{  display:'flex', justifyContent:'center'}} className={headerStyles.socialButton}>
-                      
+                      <Link href="https://www.facebook.com/prasan.tuladhar" passHref={true}>
                       <IconButton size="large" aria-label="facebook" color="inherit" disableRipple>
                         <Move y={-10}>
                          <FacebookIcon />
                         </Move>
                       </IconButton>
-                      <IconButton size="large" aria-label="Twitter" color="inherit" disableRipple>
+                      </Link>
+                      <Link href="https://www.linkedin.com/in/prasanna-tuladhar-9b567510a/" passHref={true}>
+                      <IconButton size="large" aria-label="LinkedIn" color="inherit" disableRipple>
                       <Move y={-10}>
-                          <InstagramIcon />
+                          <LinkedInIcon />
                           </Move>
                       </IconButton>
+                      </Link>
+                      <Link href="https://github.com/prasan2421" passHref={true}>
                       <IconButton size="large" aria-label="Instagram" color="inherit" disableRipple>
                       <Move y={-10}>
-                      <TwitterIcon />
+                      <GitHubIcon />
                       </Move>
                   </IconButton>
+                  </Link>
         </Box>
   )
 

@@ -1,7 +1,11 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import Head from 'next/head'
-
+import fs from 'fs'
+import path from 'path'
+import { useRouter } from 'next/router'
+import matter from 'gray-matter';
+import Image from 'next/image';
 import utilStyles from '../styles/utils.module.css'
 import { getSortedPostsData } from '../lib/posts'
 import Link from 'next/link'
@@ -20,28 +24,32 @@ import AddReactionIcon from '@mui/icons-material/AddReaction';
 import DownloadIcon from '@mui/icons-material/Download';
 
 
-import HomeSectionFirst from './posts/HomeSectionFirst';
-import HomeSectionSecond from './posts/HomeSectionSecond';
-import HomeSectionThird from './posts/HomeSectionThird';
-import HomeSectionFourth from './posts/HomeSectionFourth';
-import HomeSectionFifth from './posts/HomeSectionFifth'; 
+import HomeSectionFirst from './home/HomeSectionFirst';
+import HomeSectionSecond from './home/HomeSectionSecond';
+import HomeSectionThird from './home/HomeSectionThird';
+import HomeSectionFourth from './home/HomeSectionFourth';
+import HomeSectionFifth from './home/HomeSectionFifth'; 
 
 
 
 //  const containerRef = React.useRef(null);
 
 export default function Home({
-  allPostsData
+  posts,
 }: {
-  allPostsData: {
-    date: string
-    title: string
+  posts: {
     id: string
+   
   }[]
 }) {
 
   const theme = useTheme();
 
+  // useEffect(()=>{
+      
+  //   // getStaticProps()
+  //   alert(JSON.stringify(posts))
+  // })
 
   
   return (
@@ -80,7 +88,8 @@ export default function Home({
        <Box className='ContainerWrapper' sx={{marginX:{ xs: '0.1rem', md:'1rem' },}}>{'<html>'}</Box>
        
         <HomeSectionFirst/>
-        <HomeSectionSecond/>
+        
+        <HomeSectionSecond posts={posts}/>
         <HomeSectionThird/>
         <HomeSectionFourth/>
         <HomeSectionFifth/>
@@ -93,11 +102,37 @@ export default function Home({
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-  const allPostsData = getSortedPostsData()
+// export const getStaticProps: GetStaticProps = async () => {
+//   const allPostsData = getSortedPostsData()
+
+//   return {
+//     props: {
+//       allPostsData,
+  
+//     }
+//   }
+// }
+
+export async function getStaticProps() {
+  const files = fs.readdirSync(path.join('projects'));
+ console.log(files)
+
+  const posts = files.map((fileName) => {
+    const slug = fileName.replace('.md', '');
+    const readFile = fs.readFileSync(  path.join('projects', fileName), 'utf-8');
+    const { data: frontmatter } = matter(readFile);
+    return {
+      slug,
+      frontmatter,
+    };
+  });
+
+
+
   return {
     props: {
-      allPostsData
-    }
-  }
-}
+      posts,
+    },
+  };
+}  
+
