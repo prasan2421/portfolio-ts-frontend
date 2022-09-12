@@ -29,10 +29,12 @@ module.exports = {
     return config
   },
 
+  images: {
+    unoptimized: true
+},
+
   experimental: {
-    images: {
-        unoptimized: true
-    },
+    
     scrollRestoration: true,
 },
 resolve: {

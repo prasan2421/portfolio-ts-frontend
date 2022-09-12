@@ -47,14 +47,14 @@ function DancingLinesLight(props: Props) {
       window.setTimeout(fn, 1000 / 60);
     };
 
-  const init = (event: MouseEvent | window.TouchEvent) => {
+  const init = (event: MouseEvent ) => {
     debug && console.log('init');
     document.removeEventListener('mousemove', init);
-    document.removeEventListener('touchstart', init);
+
 
     document.addEventListener('mousemove', mousemove);
     document.addEventListener('touchmove', mousemove);
-    document.addEventListener('touchstart', touchstart);
+   
 
     mousemove(event);
     reset();
@@ -154,24 +154,15 @@ function DancingLinesLight(props: Props) {
     runningRef.current = false;
   };
 
-  const mousemove = (event: window.TouchEvent | MouseEvent) => {
+  const mousemove = (event:  MouseEvent) => {
     debug && console.log('mousemove');
-    if (typeof event === window.TouchEvent) {
-      targetRef.current.x = event.touches[0].pageX;
-      targetRef.current.y = event.touches[0].pageY;
-    } else {
+   
       targetRef.current.x = event.clientX;
       targetRef.current.y = event.clientY;
-    }
+    
   };
 
-  const touchstart = (event: window.TouchEvent) => {
-    debug && console.log('touchstart');
-    if (event.touches.length == 1) {
-      targetRef.current.x = event.touches[0].pageX;
-      targetRef.current.y = event.touches[0].pageY;
-    }
-  };
+ 
 
   /**
    * Attach all events to window object
@@ -187,7 +178,7 @@ function DancingLinesLight(props: Props) {
     frameRef.current = 1;
 
     document.addEventListener('mousemove', init);
-    document.addEventListener('touchstart', init);
+    
     document.body.addEventListener('orientationchange', resize);
     window.addEventListener('resize', resize);
     window.addEventListener('focus', start);
@@ -197,7 +188,7 @@ function DancingLinesLight(props: Props) {
 
     return () => {
       document.removeEventListener('mousemove', init);
-      document.removeEventListener('touchstart', init);
+
       document.body.removeEventListener('orientationchange', resize);
       window.removeEventListener('resize', resize);
       window.removeEventListener('focus', start);

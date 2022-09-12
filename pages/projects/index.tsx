@@ -50,8 +50,7 @@ import { CardActionArea, CardActions } from '@mui/material';
 import styles from '../../styles/About.module.css';
 import Alert from '@mui/material/Alert';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import TagSphere from "../components/wordSphere";
-import MyMaps from "../components/maps";
+
 import { GoogleMap,LoadScript, useLoadScript, Marker } from "@react-google-maps/api";
 
  // import Swiper core and required modules

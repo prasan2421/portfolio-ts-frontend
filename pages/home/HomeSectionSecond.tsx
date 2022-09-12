@@ -146,7 +146,7 @@ export default function HomeSectionSecond({posts}) {
       </Grid>
       <Grid container className="portfolioGallary" spacing={1}>
      
-      {posts.slice(0, 5).map((text, index) => (
+      {(posts?posts.slice(0, 5):[]).map((text, index) => (
         <Grid key={index} item xs={6} md={2.4} sx={{position:'relative',}}>
         <Card sx={{borderRadius:0,}}>
         <CardActionArea 
