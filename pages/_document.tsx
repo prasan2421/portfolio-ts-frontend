@@ -6,7 +6,7 @@ export default function Document() {
     <Html lang="en">
       
       <Script strategy="lazyOnload" src="https://www.googletagmanager.com/gtag/js?id=G-JEYE1RNNJV"/>
-<Script strategy="lazyOnload">
+<Script id="my-script" strategy="lazyOnload">
   {`
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
