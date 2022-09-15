@@ -237,12 +237,14 @@ export default function Layout({ children, home }: {
       <CssBaseline />
       <AppBar
         position="fixed"
-        sx={{ background: 'transparent',  color:"inherit", boxShadow: 'none', width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
+        sx={{ background: 'transparent',  color:"inherit", boxShadow: 'none', width:'100%' 
+        // `calc(100% - ${drawerWidth}px)`
+        , ml: `${drawerWidth}px` }}
       >
         <Toolbar>
           <Box  sx={{  flex:1, justifyContent:'left', display: 'flex' }}></Box>
        
-        <Alert severity="info" sx={{justifyContent:'center',display:'flex',  borderRadius:'15px',}}>Portfolio under construction !!</Alert>
+        <Alert severity="info" sx={{justifyContent:'center',display:'flex',  borderRadius:'15px',width:'max-content'}}>Portfolio under construction !!</Alert>
        
         <Box  sx={{  flex:1, justifyContent:'right', display: 'flex' }}>
             <Box>

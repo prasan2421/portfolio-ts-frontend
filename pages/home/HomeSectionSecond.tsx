@@ -15,6 +15,7 @@ import { getProjectsIds } from '../../lib/posts'
 import { CardActionArea, CardActions } from '@mui/material';
 import Zoom from '@mui/material/Zoom';
 import Paper from '@mui/material/Paper';
+import useBreakpoint from 'use-breakpoint';
 import deer from '../../assets/images/deer.png';
 
 import BackgroundText from "../../components/BackgroundText";
@@ -27,54 +28,8 @@ import { styled, alpha, ThemeProvider, createTheme, useTheme,responsiveFontSizes
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import DownloadIcon from '@mui/icons-material/Download';
 
-const portfolioArray= [
-  {
-    id: 0,
-    nome: "Venus",
-    valor: 15000.00,
-    imageUrl:
-      "https://www.zmescience.com/mrf4u/statics/i/ps/cdn.zmescience.com/wp-content/uploads/2016/08/600px-Venus_in_Real_Color_28Mosaic29.jpg?width=1200&enable=upscale",
-    quantidade: 0,
-  },
-  {
-    id: 1,
-    nome: "Marte",
-    valor: 10000.00,
-    imageUrl:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/OSIRIS_Mars_true_color.jpg/1200px-OSIRIS_Mars_true_color.jpg",
-    quantidade: 0,
-  },
-  {
-    id: 2,
-    nome: "Saturno",
-    valor: 5000.00,
-    imageUrl:
-      "https://p2.trrsf.com/image/fget/cf/1200/1200/filters:quality(85)/images.terra.com/2020/10/16/saiba-como-o-ciclo-de-saturno-influencia-na-perspectiva-profissional-16094.jpg",
-    quantidade: 0,
-  },
-  {
-    id: 3,
-    nome: "Jupiter",
-    valor: 135000.00,
-    imageUrl:
-      "https://s2.glbimg.com/34AekqqbXdAFCWAuG0g34I6d0Nw=/1200x/smart/filters:cover():strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2019/B/w/tNqMxeRvWvSvLbHuChkA/jupiter01.jpg",
-    quantidade: 0,
-  },
-  {
-    id: 4,
-    nome: "Asgard",
-    valor: 95500.00,
-    imageUrl:
-      "https://fastly.4sqi.net/img/general/200x200/14230145_7d_kRyBPk1F4jYm4tiVGLHR66Yn7WoHctHd53HIuRpo.jpg",
-    quantidade: 0,
-  },
-  {
-    id: 5,
-    nome: "Dagobah",
-    valor: 90000.00,
-    imageUrl: "https://f4.bcbits.com/img/a0980289374_10.jpg",
-    quantidade: 0,
-  }]
+const BREAKPOINTS = { mobile: 0, tablet: 900, desktop: 1280 }
+
 
 
 const CustomButton = styled(Button)({
@@ -85,6 +40,7 @@ const CustomButton = styled(Button)({
 export default function HomeSectionSecond({posts}) {
 
   const router = useRouter()
+  const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS, 'desktop');
 
     const [checked, setChecked] = React.useState(true);
     const [mouseOverItem, setMouseOverItem] = React.useState(null);
@@ -105,6 +61,10 @@ export default function HomeSectionSecond({posts}) {
   //   // getStaticProps()
   //   alert(JSON.stringify(posts))
   // })
+
+ 
+
+  
   const theme = useTheme();
   return (
 
@@ -148,7 +108,46 @@ export default function HomeSectionSecond({posts}) {
      
       {(posts?posts.slice(0, 5):[]).map((text, index) => (
         <Grid key={index} item xs={6} md={2.4} sx={{position:'relative',}}>
-        <Card sx={{borderRadius:0,}}>
+          {breakpoint=='mobile'?(
+            <Link  href={`/projects/${text.slug}`}  passHref >
+            <Card sx={{borderRadius:0,}}>
+          
+          <CardActionArea 
+          className='media'
+         onMouseEnter={()=>handlePopoverOpen(index)}
+         onMouseLeave={()=>handlePopoverOpen(null)} 
+                          sx={{position:'relative',}} >
+            {/* <CardMedia
+           
+              component="img"
+              // image={`/${text.frontmatter.socialImage}`}
+              image={deer}
+              
+            /> */}
+  
+  <Image style={{backgroundColor:theme.palette.mode === 'dark' ?'black':'white'}}
+                      // loader={myLoader}
+                      src={text.frontmatter.socialImage?`/${text.frontmatter.socialImage}`:deer}
+                      alt="deer"
+                      width={600}
+                      height={600}
+                    />
+            
+          
+            
+            <Box sx={{position:'absolute', bottom:10,right:10, left:10, textAlign:'center',}}>
+        <Paper elevation={3} sx={{backgroundColor:theme.palette.mode === 'dark' ?'rgb(48 48 48 / 24%)':'rgb(255 255 255 / 24%)'}}>
+  
+          <p style={{margin:0,padding:'5px'}}>{text.slug}</p>
+        </Paper>
+        </Box>
+          </CardActionArea>
+        
+        </Card>
+        </Link>
+          ):(
+            <Card sx={{borderRadius:0,}}>
+          
         <CardActionArea 
         className='media'
        onMouseEnter={()=>handlePopoverOpen(index)}
@@ -179,8 +178,10 @@ export default function HomeSectionSecond({posts}) {
           
            className='PortfolioItemWrapper'>
                          <Box className='ViewProject'>
-                           <p>View</p>
-                           <p>Project</p>
+                           
+                           <Typography variant='button'>View Project</Typography>
+                           {/* <Typography>Project</Typography> */}
+                           
                          </Box>
              
            </Button>
@@ -201,7 +202,10 @@ export default function HomeSectionSecond({posts}) {
         </CardActionArea>
       
       </Card>
-           </Grid>
+          )
+}
+          
+      </Grid>
         ))}
 
 <Grid  item xs={6} md={2.4} sx={{position:'relative',}}>
@@ -226,8 +230,7 @@ export default function HomeSectionSecond({posts}) {
           
            className='PortfolioItemWrapper'>
                          <Box className='ViewProject'>
-                           <p>See</p>
-                           <p>More!</p>
+                         <Typography variant='button'>See More!</Typography>
                          </Box>
              
            </Button>

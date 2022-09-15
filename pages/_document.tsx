@@ -4,7 +4,7 @@ import Script from 'next/script'
 export default function Document() {
   return (
     <Html lang="en">
-      
+      <Head />
       <Script strategy="lazyOnload" src="https://www.googletagmanager.com/gtag/js?id=G-JEYE1RNNJV"/>
 <Script id="my-script" strategy="lazyOnload">
   {`
@@ -17,7 +17,7 @@ export default function Document() {
     });
   `}
 </Script>
-<Head />
+
       <body 
     //   className="bg-white"
       >
