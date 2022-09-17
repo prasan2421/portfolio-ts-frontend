@@ -3,11 +3,13 @@ import fs from 'fs';
 import path from 'path'
 import matter from 'gray-matter';
 import { useEffect, useState, useRef,useMemo, useCallback } from "react";
+
 // import Announcement from "../components/Announcement";
 // import Categories from "../components/Categories";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import TextField from '@mui/material/TextField';
-
+import CancelIcon from '@mui/icons-material/Cancel';
+import useBreakpoint from 'use-breakpoint';
 // import TextareaAutosize from '@mui/material/TextareaAutosize';
 // import Newsletter from "../components/Newsletter";
 // import Products from "../components/Products";
@@ -51,6 +53,7 @@ import Alert from '@mui/material/Alert';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import TagSphere from "../../components/wordSphere";
 import MyMaps from "../../components/maps";
+import DetailModel from "../../components/DetailModel"
 import { GoogleMap,LoadScript, useLoadScript, Marker } from "@react-google-maps/api";
 
  // import Swiper core and required modules
@@ -74,10 +77,11 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import { setMaxListeners } from "events";
 
 // const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
-
+const BREAKPOINTS = { mobile: 0, tablet: 900, desktop: 1280 }
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -87,37 +91,6 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const HardData=[
-  {'image':travel, 'title':'HTML', 'subtitle':'Basic','subField':['Nonverbal communication','Public speaking','Verbal Communication']},
-      {'image':ballSports, 'title':'CSS', 'subtitle':'Good','subField':['Conflict resolution','Constructive criticism','Counseling','Mediating','Problem-solving']},
-      {'image':technology, 'title':'Javascript', 'subtitle':'Good','subField':['Caring','Compassion','Diplomacy','Diversity','Helping others','Kindness','Patience','Respect','Sensitivity','Sympathy']},
-      {'image':art, 'title':'Typescript', 'subtitle':'Good','subField':['Encouraging',
-       'Inspiring trust',
-        'Instructing',
-        'Management',
-        'Mentoring',
-        'Motivation',
-        'Positive reinforcement']},
-      {'image':guitar, 'title':'Graphic Designing', 'subtitle':'Good','subField':['Active listening',
-        'Curiosity',
-        'Focus',
-        'Inquiry']},
-      {'image':cycling, 'title':'UI/UX designing', 'subtitle':'Good','subField':['Negotiating',
-        'Persuasion',
-        'Research']},
-      {'image':cycling, 'title':'PHP', 'subtitle':'Good','subField':['Behavioral skills',
-        'Developing rapport',
-        'Friendliness',
-        'Humor',
-        'Networking',
-        'Social skills']},
-      {'image':cycling, 'title':'Video Editing', 'subtitle':'Good','subField':['Collaboration',
-        'Group facilitating',
-        'Team building',
-        'Teamwork']},
-      
-      
-  ];
 
 const containerStyle = {
   width: '400px',
@@ -130,95 +103,15 @@ const center = {
 };
 
 
-const PersonalData=[
-  {'title':'Name', 'subtitle':'Prasanna Tuladhar'},
-  {'title':'Birth Date', 'subtitle':'23/03/1993'},
-  {'title':'Email', 'subtitle':'tuladharprasan@gmail.com'},
-  {'title':'Website', 'subtitle':'www.prasannat.com'},
-  {'title':'Address', 'subtitle':'Storgata 63, 0182, Oslo'},
-  
-  ];
+
  
     const EducationData=[
-      {'image':usn, 'title':'Application Developer (Web / Mobile)', 'subtitle':'I.Click Pvt.Ltd. ','date':'07/03/2018 – 30/11/2020 '},
-      {'image':tu, 'title':'Internship in Web Development', 'subtitle':'Sherpa Technologies Pvt. Ltd.','date':'02/08/2017 – 09/12/2017'},
+      {'image':usn, 'title':'Application Developer (Web / Mobile)', 'subtitle':'I.Click Pvt.Ltd. ','date':'07/03/2018 – 30/11/2020','list':['Developed Web and mobile (android / iOS) applications.','Cooperated with designers to create clean interfaces and simple, intuitive interactions and experiences.','Developed project concepts and maintained optimal workflow.','API integration between applications.','Updated landing pages, product listings, and checkouts for launches and promotions.','Created new page designs for split tests and promotions','Worked with testing teams to end tests and make winning variations live.','optimized page structures for better performance','Incorporated requested QA updates','Assisted with tracking and documentation for split tests and funnels']},
+      {'image':tu, 'title':'Internship in Web Development', 'subtitle':'Sherpa Technologies Pvt. Ltd.','date':'02/08/2017 – 09/12/2017','list':['Designed company’s website using HTML,CSS,Javascript (Bootstrap framework)','Listened to and implemented management’s recommendations into the website','Determined customer needs and improved UX in response.','Backend coding and developed APIs.','Debugged problems with minimal guidance']},
       
       ];
 
-      const TrainingData=[
-        {'image':spn, 'title':'Web development', 'subtitle':'Student Project Nepal','date':'10/2016 - 03/2017'},
-        {'image':spn, 'title':'Graphics designing', 'subtitle':'Student Project Nepal','date':'2011'},
-        
-        
-        ];
-    const LanguageData=[
-      {'image':spn, 'title':'Norwegian', 'subtitle':'Basic'},
-          {'image':spn, 'title':'English', 'subtitle':'Good'},
-          {'image':spn, 'title':'Nepali', 'subtitle':'Good'},
-          {'image':spn, 'title':'Hindi', 'subtitle':'Good'},
-          
-          
-      ];
-      const InterestData=[
-        {'image':travel, 'title':'Travel', 'subtitle':'Basic'},
-            {'image':ballSports, 'title':'Sports', 'subtitle':'Good'},
-            {'image':technology, 'title':'Technology', 'subtitle':'Good'},
-            {'image':art, 'title':'Art', 'subtitle':'Good'},
-            {'image':guitar, 'title':'Music', 'subtitle':'Good'},
-            {'image':cycling, 'title':'Outdoor Activities', 'subtitle':'Good'},
-            
-            
-        ]
-
-const portfolioArray= [
-    {
-      id: 0,
-      nome: "Venus",
-      valor: 15000.00,
-      imageUrl:
-        "https://www.zmescience.com/mrf4u/statics/i/ps/cdn.zmescience.com/wp-content/uploads/2016/08/600px-Venus_in_Real_Color_28Mosaic29.jpg?width=1200&enable=upscale",
-      quantidade: 0,
-    },
-    {
-      id: 1,
-      nome: "Marte",
-      valor: 10000.00,
-      imageUrl:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/OSIRIS_Mars_true_color.jpg/1200px-OSIRIS_Mars_true_color.jpg",
-      quantidade: 0,
-    },
-    {
-      id: 2,
-      nome: "Saturno",
-      valor: 5000.00,
-      imageUrl:
-        "https://p2.trrsf.com/image/fget/cf/1200/1200/filters:quality(85)/images.terra.com/2020/10/16/saiba-como-o-ciclo-de-saturno-influencia-na-perspectiva-profissional-16094.jpg",
-      quantidade: 0,
-    },
-    {
-      id: 3,
-      nome: "Jupiter",
-      valor: 135000.00,
-      imageUrl:
-        "https://s2.glbimg.com/34AekqqbXdAFCWAuG0g34I6d0Nw=/1200x/smart/filters:cover():strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2019/B/w/tNqMxeRvWvSvLbHuChkA/jupiter01.jpg",
-      quantidade: 0,
-    },
-    {
-      id: 4,
-      nome: "Asgard",
-      valor: 95500.00,
-      imageUrl:
-        "https://fastly.4sqi.net/img/general/200x200/14230145_7d_kRyBPk1F4jYm4tiVGLHR66Yn7WoHctHd53HIuRpo.jpg",
-      quantidade: 0,
-    },
-    {
-      id: 5,
-      nome: "Dagobah",
-      valor: 90000.00,
-      imageUrl: "https://f4.bcbits.com/img/a0980289374_10.jpg",
-      quantidade: 0,
-    }]
-
+  
 
 const images = [
   {
@@ -273,12 +166,14 @@ interface FadeProps {
   onExited?: () => {};
 }
 
-const style = {
-  position: 'absolute' as 'absolute',
+const styleModel = {
+  position: 'absolute' ,
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 500,
+ maxHeight:'90%',
+// width: {breakpoint!=='mobile'?'90%':'auto'},
+//  overflow:'auto',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -294,6 +189,7 @@ const CustomButton = styled(Button)({
 
 const Work = ({posts}) => {
   const theme = useTheme();
+  const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS, 'desktop');
 
   useEffect(()=>{
     window.scrollTo(0,0)
@@ -309,14 +205,23 @@ const Work = ({posts}) => {
   // const colorMode = React.useContext(ColorModeContext);
   const [checked, setChecked] = React.useState(true);
 
+  
+
   const handleChange = () => {
     setChecked((prev) => !prev);
   };
   const maxSteps = images.length;
 
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [listData, setListData] = React.useState({});
+  // const [data, setData] = React.useState('testing');
+  const handleOpen = (list) => {
+    setListData(list);
+    setOpen(true);
+  }
+  const handleClose = () => {
+    setListData();
+    setOpen(false);}
 
 
   const handleNext = () => {
@@ -349,43 +254,21 @@ const Work = ({posts}) => {
     BackdropProps={{
       timeout: 500,
     }}
+   
   >
     <Fade in={open}>
-      <Box sx={style}  component="form"
-     
-      noValidate
-      autoComplete="off">
-      <Container>
-      <Box >
-        <Box sx={{marginBottom:'20px'}}>
-        <h1>Contact Me</h1>
+    <Box sx={[styleModel,{width:breakpoint=='mobile'?'90%':'auto'},{paddingX:breakpoint=='mobile'?'0':'32px'}]}  component="form"
+     noValidate
+     autoComplete="off">
+       <Button size='large' onClick={handleClose} sx={{position:'absolute',right:0,top:'0',minWidth:0}}>
+        <CancelIcon fontSize='large' sx={{color:'red',}}/>
+      </Button>
+       <Box sx={{maxHeight:'100%',overflow:'auto'}}>
+      
+    <DetailModel ListData={listData} style={{marginTop:'20px'}}/>
         </Box>
-        
-        <TextField id="outlined-basic" label="Name" variant="outlined" style={{ width:'50%', marginBottom:'10px' , paddingRight:'5px'}}/>
-                        <TextField id="outlined-basic" label="Email" variant="outlined" style={{width:'50%', marginBottom:'10px',paddingLeft:'5px' }}/>
-
-                        <TextField id="outlined-basic" label="Subject" variant="outlined" style={{display:'flex', width:'100%', marginBottom:'10px' }}/>
-                        <TextField
-                        id="outlined-basic" label="Message" variant="outlined"
-                      
-                            multiline
-                            rows={4}
-                            // defaultValue="You are awesome!!"
-                            style={{display:'flex', width:'100%',marginBottom:'20px'}}
-                          />      <TextField
-          id="outlined-multiline-static"
-          label="Message"
-          multiline
-          rows={4}
-          defaultValue="You are awesome!!"
-          style={{display:'flex', width:'100%',marginBottom:'20px'}}
-        />
-        <Button sx={{display:'flex'}}>
-          Send <Send />
-        </Button>
-      </Box>
-    </Container>
-      </Box>
+    </Box>
+    
     </Fade>
   </Modal>
   );
@@ -427,16 +310,16 @@ theme={theme}
 >
     <Box className='main' component="main" sx={{ color: 'text.primary', flexGrow:1, marginBottom:'15px' }}>  
     <Box className='ContainerWrapper' sx={{marginX:{ xs: '0.1rem', md:'1rem' },}}>{'<html>'}</Box>
-    {renderForm}
+   
     <Box sx={{marginBottom:'7rem'}}>
-    
+    {renderForm}
       
       {/* -------------------------------------------- First grid --------------------------------------------------- */}
 
     <Box style={{position:'relative', overflow: 'hidden', paddingTop:'6rem',paddingBottom:'10rem'}}>
     <BackgroundText text={'Work'}/>
       <Grid container sx={{paddingX: {xs:'2.5rem',md:'4.5rem'}, marginBottom:'5rem'}}>
-        <Grid item xs={12} lg={8}>
+        <Grid item xs={12} lg={8}> 
       <Slide direction="up" in={checked} container={containerRef.current}>
               <Box sx={{ color: 'text.primary'}} >
             <Box className={styles.PortfolioTitle}>
@@ -473,23 +356,21 @@ theme={theme}
      <Box className={styles.AboutDiv}>
      <Container maxWidth="xl" sx={{marginTop:'-5rem'}}  >
      <Grid container > 
-     
-      
       <Grid xs={12} >
         <Card sx={{margin:'7px', borderTop:`2px solid lightgreen`}}>
-          <CardActionArea>
+        
             <CardContent>
             <Typography gutterBottom variant="h5" component="div" color="lightgreen">
                 Work Experience
               </Typography>
               {EducationData.map((text, index) => (
-                <Box  key={index} sx={{display:{sm:'flex'}, marginY:'15px',}}>
+                <CardActionArea  onClick={()=>handleOpen(text)} >
+                <Box  key={index} sx={{display:{sm:'flex'}, margin:'15px',}}>
                   <Box sx={{width:{xs:'100%',sm:'auto'},marginRight:'10px',justifyContent:'center', alignItems:'center',display:{xs:'flex',sm:'block'}}}>
-                 
                     <Image
                     // loader={myLoader}
                     src={text.image}
-                    alt="Picture of the author"
+                    alt="Picture of the Company"
                     width={70}
                     height={70}
                   />
@@ -507,9 +388,10 @@ theme={theme}
                       </Typography>
                     </Box>
               </Box>
+              </CardActionArea>
               ))}
             </CardContent>
-          </CardActionArea>
+        
         </Card>
       </Grid>
 
@@ -517,7 +399,6 @@ theme={theme}
       <Grid xs={12} >
       
         <Card id="sectProjects" sx={{margin:'7px', borderTop:`2px solid lightgreen`}}>
-         
             <CardContent>
             <Typography gutterBottom variant="h5" component="div" color="lightgreen">
                 Projects
@@ -527,7 +408,7 @@ theme={theme}
                 <Grid  key={index} xs={6} sm={6} md={3} sx={{display:'flex',justifyContent:'center'}}>
                 <CardActionArea sx={{borderRadius:'20px',overflow:'hidden'}}>
               <Box sx={{ marginY:'15px', }}>
-                <Box sx={{    justifyContent: 'center',
+                <Box sx={{   justifyContent: 'center',
   display: 'flex'}}>
                 <Image
                     // loader={myLoader}

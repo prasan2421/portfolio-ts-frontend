@@ -108,44 +108,8 @@ export default function HomeSectionSecond({posts}) {
      
       {(posts?posts.slice(0, 5):[]).map((text, index) => (
         <Grid key={index} item xs={6} md={2.4} sx={{position:'relative',}}>
-          {breakpoint=='mobile'?(
-            <Link  href={`/projects/${text.slug}`}  passHref >
-            <Card sx={{borderRadius:0,}}>
-          
-          <CardActionArea 
-          className='media'
-         onMouseEnter={()=>handlePopoverOpen(index)}
-         onMouseLeave={()=>handlePopoverOpen(null)} 
-                          sx={{position:'relative',}} >
-            {/* <CardMedia
-           
-              component="img"
-              // image={`/${text.frontmatter.socialImage}`}
-              image={deer}
-              
-            /> */}
-  
-  <Image style={{backgroundColor:theme.palette.mode === 'dark' ?'black':'white'}}
-                      // loader={myLoader}
-                      src={text.frontmatter.socialImage?`/${text.frontmatter.socialImage}`:deer}
-                      alt="deer"
-                      width={600}
-                      height={600}
-                    />
-            
-          
-            
-            <Box sx={{position:'absolute', bottom:10,right:10, left:10, textAlign:'center',}}>
-        <Paper elevation={3} sx={{backgroundColor:theme.palette.mode === 'dark' ?'rgb(48 48 48 / 24%)':'rgb(255 255 255 / 24%)'}}>
-  
-          <p style={{margin:0,padding:'5px'}}>{text.slug}</p>
-        </Paper>
-        </Box>
-          </CardActionArea>
-        
-        </Card>
-        </Link>
-          ):(
+         
+            <Link  href={`/projects/${text.slug}`}  passHref={breakpoint=='mobile'?true:false} >
             <Card sx={{borderRadius:0,}}>
           
         <CardActionArea 
@@ -168,7 +132,7 @@ export default function HomeSectionSecond({posts}) {
                     width={600}
                     height={600}
                   />
-          
+         { breakpoint!=='mobile'?(
           <Link  href={`/projects/${text.slug}`}  passHref >
           { mouseOverItem==index?(
               <Zoom in={true} >
@@ -191,7 +155,7 @@ export default function HomeSectionSecond({posts}) {
          className='PortfolioItemWrapper'/>
          
          </Zoom> }
-          </Link>
+          </Link>):null}
           
           <Box sx={{position:'absolute', bottom:10,right:10, left:10, textAlign:'center',}}>
       <Paper elevation={3} sx={{backgroundColor:theme.palette.mode === 'dark' ?'rgb(48 48 48 / 24%)':'rgb(255 255 255 / 24%)'}}>
@@ -199,11 +163,14 @@ export default function HomeSectionSecond({posts}) {
         <p style={{margin:0,padding:'5px'}}>{text.slug}</p>
       </Paper>
       </Box>
+
+
         </CardActionArea>
       
       </Card>
-          )
-}
+      </Link>
+          
+
           
       </Grid>
         ))}

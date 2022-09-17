@@ -16,7 +16,7 @@ interface Props {
   backgroundColor?: string;
 }
 
-const DEFAULT_BACKGROUND_COLOR = '#1d1d1d';
+const DEFAULT_BACKGROUND_COLOR = '#0c0c0c';
 
 
 function DancingLinesDark(props: Props) {
