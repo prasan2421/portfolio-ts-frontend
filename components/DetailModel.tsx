@@ -91,7 +91,7 @@ const DetailModel = ({ListData, ...props}:TextProps) => {
      
       
       {ListData?ListData.list.map((item:any) => (
-         <ListItem>
+         <ListItem key='index'>
            <ListItemIcon>
                 <CircleIcon fontSize='small' sx={{color:'gray'}}/>
               </ListItemIcon>

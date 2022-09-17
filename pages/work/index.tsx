@@ -220,8 +220,9 @@ const Work = ({posts}) => {
     setOpen(true);
   }
   const handleClose = () => {
-    setListData();
-    setOpen(false);}
+    setListData('');
+    setOpen(false);
+  }
 
 
   const handleNext = () => {
@@ -265,7 +266,7 @@ const Work = ({posts}) => {
       </Button>
        <Box sx={{maxHeight:'100%',overflow:'auto'}}>
       
-    <DetailModel ListData={listData} style={{marginTop:'20px'}}/>
+    <DetailModel ListData={listData} />
         </Box>
     </Box>
     
@@ -322,7 +323,7 @@ theme={theme}
         <Grid item xs={12} lg={8}> 
       <Slide direction="up" in={checked} container={containerRef.current}>
               <Box sx={{ color: 'text.primary'}} >
-            <Box className={styles.PortfolioTitle}>
+            <Box className={styles.PortfolioTitle} sx={{boxShadow: 10}}>
               
               <Grow in={checked} style={{ transformOrigin: '0 0 0' }}
                   {...(checked ? { timeout: 1000 } : {})}>
@@ -364,7 +365,7 @@ theme={theme}
                 Work Experience
               </Typography>
               {EducationData.map((text, index) => (
-                <CardActionArea  onClick={()=>handleOpen(text)} >
+                <CardActionArea key='index' onClick={()=>handleOpen(text)} >
                 <Box  key={index} sx={{display:{sm:'flex'}, margin:'15px',}}>
                   <Box sx={{width:{xs:'100%',sm:'auto'},marginRight:'10px',justifyContent:'center', alignItems:'center',display:{xs:'flex',sm:'block'}}}>
                     <Image
