@@ -146,7 +146,7 @@ export default function Layout({ children, home }: {
                     // onClick={() => alert('fsdfs')}
                     
                   >
-                    <CancelOutlinedIcon sx={{margin:'0', padding:'0'}} fontSize='large'/>
+                    <CancelOutlinedIcon sx={{margin:'0', padding:'0', color:'inherit'}} fontSize='large'/>
                   </IconButton>
                   </Box>
                  
@@ -203,21 +203,21 @@ export default function Layout({ children, home }: {
                       <Link href="https://www.facebook.com/prasan.tuladhar" passHref={true}>
                       <IconButton size="large" aria-label="facebook" color="inherit" disableRipple>
                         <Move y={-10}>
-                         <FacebookIcon />
+                         <FacebookIcon sx={{color:'inherit'}}/>
                         </Move>
                       </IconButton>
                       </Link>
                       <Link href="https://www.linkedin.com/in/prasanna-tuladhar-9b567510a/" passHref={true}>
                       <IconButton size="large" aria-label="LinkedIn" color="inherit" disableRipple>
                       <Move y={-10}>
-                          <LinkedInIcon />
+                          <LinkedInIcon  sx={{color:'inherit'}}/>
                           </Move>
                       </IconButton>
                       </Link>
                       <Link href="https://github.com/prasan2421" passHref={true}>
                       <IconButton size="large" aria-label="Instagram" color="inherit" disableRipple>
                       <Move y={-10}>
-                      <GitHubIcon />
+                      <GitHubIcon  sx={{color:'inherit'}}/>
                       </Move>
                   </IconButton>
                   </Link>
@@ -296,7 +296,7 @@ export default function Layout({ children, home }: {
               // onClick={() => alert('fsdfs')}
               
             >
-              <MenuIcon fontSize='large'/>
+              <MenuIcon sx={{color:'inherit'}} fontSize='large'/>
             </IconButton>
   
             </Box>

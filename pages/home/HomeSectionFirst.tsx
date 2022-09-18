@@ -214,7 +214,7 @@ export default function HomeSectionFirst(
         <Slide direction="up" in={checked} 
         // container={containerRef.current}
         >
-          <Box sx={{ color: 'inherit'}} >
+          <Box sx={{ color: 'inherit',marginTop:'30px'}} >
         <Box className="introText">
           <Grow in={checked} style={{ transformOrigin: '0 0 0' }}>
           <Typography variant="h1"> Hi, </Typography>
@@ -233,7 +233,7 @@ export default function HomeSectionFirst(
         </Box>
       <Box className='subTitle'><Typography variant="subtitle1">React | React Native | Growth Hacking Enthusiast</Typography></Box>
       <Box  sx={{marginTop:'50px', display:{sm:'flex'},  }}>
-                <Box sx={{display:{xs:'flex'}, border:'5px solid ', borderRadius:'20px', overflow:'hidden', alignItems:{sm:'center'}, width:{xs:'100%',sm:'auto'},marginTop:{xs:'10px',sm:'0'} }}>
+                <Box sx={{display:{xs:'flex'}, border:'5px solid ',borderColor:'inherit', borderRadius:'20px', overflow:'hidden', alignItems:{sm:'center'}, width:{xs:'100%',sm:'auto'},marginTop:{xs:'10px',sm:'0'} }}>
                   <CustomButton variant="text" 
                   onClick={handleOpen}
                    sx={{width:{xs:'100%',sm:'auto'},  color:"inherit", padding:{
