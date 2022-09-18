@@ -172,12 +172,13 @@ const styleModel = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
  maxHeight:'90%',
+ overflow:'hidden',
 // width: {breakpoint!=='mobile'?'90%':'auto'},
 //  overflow:'auto',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
-  p: 4,
+  paddingY: 5,
 };
 
 const CustomButton = styled(Button)({
@@ -258,16 +259,13 @@ const Work = ({posts}) => {
    
   >
     <Fade in={open}>
-    <Box sx={[styleModel,{width:breakpoint=='mobile'?'90%':'auto'},{paddingX:breakpoint=='mobile'?'0':'32px'}]}  component="form"
-     noValidate
-     autoComplete="off">
-       <Button size='large' onClick={handleClose} sx={{position:'absolute',right:0,top:'0',minWidth:0}}>
+    <Box sx={[styleModel,{width:breakpoint=='mobile'?'90%':'auto'},{paddingX:breakpoint=='mobile'?'15px':'32px'}]} >
+       <Button size='small' onClick={handleClose} sx={{position:'absolute',right:0,top:0,minWidth:0}}>
         <CancelIcon fontSize='large' sx={{color:'red',}}/>
       </Button>
-       <Box sx={{maxHeight:'100%',overflow:'auto'}}>
-      
+       
     <DetailModel ListData={listData} />
-        </Box>
+       
     </Box>
     
     </Fade>

@@ -78,8 +78,8 @@ const DetailModel = ({ListData, ...props}:TextProps) => {
 
   return (
    
-    <Container>
-    <Box >
+   
+    <Box sx={{maxHeight:'80vh', overflow:'auto'}} >
       
       <Box sx={{display:'grid'}}>
       <Typography variant='h5'>{ListData?ListData.title:''}</Typography>
@@ -103,7 +103,7 @@ const DetailModel = ({ListData, ...props}:TextProps) => {
      
       </List>
     </Box>
-  </Container>
+
    
   )
   ;
