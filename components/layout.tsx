@@ -43,6 +43,7 @@ import { styled } from "@mui/material/styles";
 import useBreakpoint from 'use-breakpoint';
 import Move from "./Move";
 import Boop from "./Move";
+import playstore from '../assets/images/playstore.png';
 const drawerWidth = 150;
 
 const name = 'Prasanna Tuladhar';
@@ -154,10 +155,13 @@ export default function Layout({ children, home }: {
   )
   const drawerList=(text:any)=>{
     return(<ListItemButton selected={router.pathname == text.link}>
+      
       <ListItemText primary={text.title} disableTypography={true}
       />
       <ListItemIcon sx={{minWidth:'inherit'}}>
+      <Move y={-10}>
           <CircleIcon fontSize='small'/>
+          </Move>
       {/* {router.pathname == text.link ?(<CircleIcon sx={{ color: red[500], fontSize: 18  }}/>):(<CircleIcon sx={{ fontSize: 18  }} className={headerStyles.inactiveStyles}/>)} */}
 
       </ListItemIcon>
@@ -171,13 +175,15 @@ export default function Layout({ children, home }: {
           {navData.map((text, index) => (
             <>
             <Divider className={headerStyles.dividerColor}/>
+            
             <ListItem key={index} disablePadding>
+              
               <Link href={`${text.link}`} 
             
               className={router.pathname !== text.link ? headerStyles.inactiveLink:null} passHref>
                 {breakpoint=='mobile'?
               (
-                
+               
                 <a onClick={()=>{setSwipabledrawer(false)}} style={{width:'100%', alignItems:'center'}}>
                {drawerList(text)}
                 </a>
@@ -199,7 +205,8 @@ export default function Layout({ children, home }: {
     )
   
   const drawerContentSocial=(
-    <Box sx={{  display:'flex', justifyContent:'center'}} className={headerStyles.socialButton}>
+    <Box sx={{  display:'block', textAlign:'center'}} className={headerStyles.socialButton}>
+                  <Box>
                       <Link href="https://www.facebook.com/prasan.tuladhar" passHref={true}>
                       <IconButton size="large" aria-label="facebook" color="inherit" disableRipple>
                         <Move y={-10}>
@@ -219,8 +226,23 @@ export default function Layout({ children, home }: {
                       <Move y={-10}>
                       <GitHubIcon  sx={{color:'inherit'}}/>
                       </Move>
-                  </IconButton>
-                  </Link>
+                      </IconButton>
+                      </Link>
+                  </Box>    
+                  <Box >
+                  <Link href={'files/app-portfolio.apk'} >
+                      <IconButton sx={{maxWidth:'150px'}} aria-label="Instagram" color="inherit" disableRipple>
+                      <Move y={-10}>
+                      <Image 
+                    src={playstore}
+                    alt="Click to doenload the app."
+                    
+                  />
+                      </Move>
+                      </IconButton>
+                      </Link>
+                  </Box>
+                  
         </Box>
   )
 
