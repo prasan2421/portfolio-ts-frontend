@@ -10,6 +10,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import TextField from '@mui/material/TextField';
 import CancelIcon from '@mui/icons-material/Cancel';
 import useBreakpoint from 'use-breakpoint';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 // import TextareaAutosize from '@mui/material/TextareaAutosize';
 // import Newsletter from "../components/Newsletter";
 // import Products from "../components/Products";
@@ -363,7 +364,7 @@ theme={theme}
                 Work Experience
               </Typography>
               {EducationData.map((text, index) => (
-                <CardActionArea key='index' onClick={()=>handleOpen(text)} >
+                <CardActionArea key='index' onClick={()=>handleOpen(text)} sx={{display:'flex', justifyContent:'space-between'}}>
                 <Box  key={index} sx={{display:{sm:'flex'}, margin:'15px',}}>
                   <Box sx={{width:{xs:'100%',sm:'auto'},marginRight:'10px',justifyContent:'center', alignItems:'center',display:{xs:'flex',sm:'block'}}}>
                     <Image
@@ -386,6 +387,9 @@ theme={theme}
                         {text.date}
                       </Typography>
                     </Box>
+              </Box>
+              <Box>
+                <ChevronRightIcon fontSize="large"/>
               </Box>
               </CardActionArea>
               ))}

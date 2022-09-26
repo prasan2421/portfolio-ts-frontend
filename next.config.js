@@ -41,5 +41,6 @@ resolve: {
         fallback: {
             "fs": false
         },
-    }
+    },
+    output: 'standalone',
 }

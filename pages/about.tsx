@@ -205,14 +205,15 @@ export default function  About(){
   const theme = useTheme();
 
   useEffect(()=>{
-    window.scrollTo(0,0)
+   
+    window.scrollTo(0,0);
+    fetchPersonalDetails()
   },[])
   
-  
-  const [mouseOverItem, setMouseOverItem] = React.useState(null);
-  
+
  
   const [activeStep, setActiveStep] = React.useState(0);
+  const [personalDetailsData, setPersonalDetailsData] = React.useState([]);
   
   // const colorMode = React.useContext(ColorModeContext);
   const [checked, setChecked] = React.useState(true);
@@ -242,6 +243,16 @@ export default function  About(){
   // const handleHireForm = () => (
   //   setCheckedZoom(false)
   // );
+
+  const fetchPersonalDetails = async () =>{
+    
+    const response = await fetch('/api/personalDetails')
+    const data = await response.json()
+
+
+    setPersonalDetailsData(data)
+
+  }
 
   
 
@@ -347,7 +358,7 @@ theme={theme}
              
             </Box>
             <Box className={styles.subTitle}>
-            <Typography variant="h5"><b style={{color:'turquoise'}}>Hello! I&apos;m Prasanna.</b> I&apos;m a Web / Mobile application development professional involved in the development of various applications throughout my few years of involvement in the field. I have a background in Computer science and Information Technologies and Information Systems.</Typography>
+            <Typography variant="h5">I&apos;m a <b style={{color:'turquoise'}}>Web / Mobile application</b> developer, involved in the development of various applications throughout my few years of involvement in the field. I have a background in Computer science and Information Technologies and Information Systems.</Typography>
             
               </Box>
                 <Box >
@@ -380,7 +391,7 @@ theme={theme}
             <Typography gutterBottom variant="h5" component="div" color="crimson">
                 Personal Details
               </Typography>
-              {PersonalData.map((text, index) => (
+              {personalDetailsData.map((text, index) => (
                 <Box key={index} sx={{marginTop:'10px'}}>
                   
                     <Typography gutterBottom variant="body2" component="div">

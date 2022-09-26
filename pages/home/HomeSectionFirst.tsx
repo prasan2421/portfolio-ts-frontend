@@ -12,11 +12,17 @@ import Backdrop from '@mui/material/Backdrop';
 import { GetStaticProps } from 'next'
 import TextField from '@mui/material/TextField';
 import Send from '@mui/icons-material/Send';
+import CancelIcon from '@mui/icons-material/Cancel';
 import Stack from '@mui/material/Stack';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import Move from "../../components/Move";
+import FormControl from '@mui/material/FormControl';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+
 // import {Link as Link2} from '@mui/material/Link';
 
 import {Grid, Box, Slide, Grow, Typography, Button, IconButton} from '@mui/material';
@@ -28,14 +34,6 @@ import DownloadIcon from '@mui/icons-material/Download';
 const CustomButton = styled(Button)({
  
     padding:'1rem 3rem 1rem 3rem',
-    // backgroundColor: '#fff',
-    // '&:hover': {
-    //   backgroundColor: '#d9f3ff',
-     
-    //   boxShadow: 'none',
-    // },
-    
-  
     
    });
 
@@ -87,6 +85,24 @@ const Fade = React.forwardRef<HTMLDivElement, FadeProps>(function Fade(props, re
     p: 4,
   };
 
+  interface IFormInputs {
+    Name: string;
+    Email: string;
+    Subject: string;
+    Message: string;
+    // iceCreamType: { label: string; value: string };
+    // password: yup.string().min(4).max(20).required(),
+  }
+
+  const schema = yup.object({
+    Name: yup.string().required(),
+    // age: yup.number().positive().integer().required(),
+    Email: yup.string().email().required(),
+    Subject: yup.string().required(),
+    Message: yup.string().required()
+  }).required();
+ 
+
 export default function HomeSectionFirst(
   
   // { dateString }: { dateString: string }
@@ -94,12 +110,85 @@ export default function HomeSectionFirst(
     const [checked, setChecked] = React.useState(true);
     const [open, setOpen] = React.useState(false);
     const [openEmoji, setOpenEmoji] = React.useState(false);
+    const [message, setMessage] = React.useState('');
+    
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const handleOpenEmoji = () => setOpenEmoji(true);
   const handleCloseEmoji = () => setOpenEmoji(false);
+
+  // const handleSubmit = async (event:any) => {
+  //   // Stop the form from submitting and refreshing the page.
+  //   event.preventDefault()
+
+  //   // Get data from the form.
+  //   const data = {
+  //     first: event.target.first.value,
+  //     last: event.target.last.value,
+  //   }
+
+  //   alert(data)
+
+  //   // Send the data to the server in JSON format.
+  //   const JSONdata = JSON.stringify(data)
+
+  //   // API endpoint where we send form data.
+  //   const endpoint = '/api/form'
+
+  //   // Form the request for sending data to the server.
+  //   const options = {
+  //     // The method is POST because we are sending data.
+  //     method: 'POST',
+  //     // Tell the server we're sending JSON.
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     // Body of the request is the JSON data we created above.
+  //     body: JSONdata,
+  //   }
+
+  //   // Send the form data to our forms API on Vercel and get a response.
+  //   const response = await fetch(endpoint, options)
+
+  //   // Get the response data from server as JSON.
+  //   // If server returns the name submitted, that means the form works.
+  //   const result = await response.json()
+  //   alert(`Is this your full name: ${result.data}`)
+  // }
+
+  const submitMessage= async(data:any) =>{
+    
+    // const dataMessage = JSON.stringify({'name':'ram','email':'dasdas','message':'dasdasdas'})
+    
+    // alert(dataMessage)
+   
+    const response = await fetch('/api/contact', {
+      method:'POST',
+      body:JSON.stringify({'name':'ram','email':'dasdas','message':'dasdasdas'}),
+      headers:{
+        'Content-Type':'application/json'
+      }
+
+    })
+
+    const datames = await response.json()
+  
+    console.log(datames)
+  }
+
+  const { control, handleSubmit, formState: { errors }  } = useForm<IFormInputs>({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit: SubmitHandler<IFormInputs> = (data) => {
+    
+    // submitMessage(data)
+    alert('This feature is currently under construction.')
+  // setMessage(data)
+  
+  };
 
   const renderForm = (
     
@@ -115,38 +204,100 @@ export default function HomeSectionFirst(
     }}
   >
     <Fade in={open}>
-      <Box sx={style}  component="form"
-    
-      noValidate
-      autoComplete="off">
+      <Box sx={style} >
       <Container>
       <Box >
+      <Button size='small' onClick={handleClose} sx={{position:'absolute',right:0,top:0,minWidth:0}}>
+        <CancelIcon fontSize='large' sx={{color:'red',}}/>
+      </Button>
         <Box sx={{marginBottom:'20px'}}>
         <h1>Contact Me</h1>
         </Box>
         
-        <TextField id="outlined-basic" label="Name" variant="outlined" sx={{ width:{xs: '100%',sm:'100%', md:'50%'}, marginBottom:'10px' , paddingRight:{sm:0,md:'5px'}}}/>
-                        <TextField id="outlined-basic" label="Email" variant="outlined" sx={{width:{xs: '100%',sm:'100%', md:'50%'}, marginBottom:'10px',paddingLeft:{sm:0,md:'5px'} }}/>
+  
+        <form onSubmit={handleSubmit(onSubmit)} >
 
-                        <TextField id="outlined-basic" label="Subject" variant="outlined" style={{display:'flex', width:'100%', marginBottom:'10px' }}/>
-                        <TextField
-                        id="outlined-basic" label="Message" variant="outlined"
-                      
-                            multiline
-                            rows={4}
-                            // defaultValue="You are awesome!!"
-                            style={{display:'flex', width:'100%',marginBottom:'20px'}}
-                          />      <TextField
-          id="outlined-multiline-static"
-          label="Message"
-          multiline
-          rows={4}
-          defaultValue="You are awesome!!"
-          style={{display:'flex', width:'100%',marginBottom:'20px'}}
-        />
-        <Button sx={{display:'flex'}}>
-          Send <Send />
-        </Button>
+        <Controller
+            name="Name"
+            control={control}
+            // defaultValue="John Doe"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Name"
+                variant="outlined"
+                error={!!errors.Name}
+                helperText={errors.Name ? errors.Name?.message : ''}
+                fullWidth
+                margin="dense"
+                sx={{ width:{xs: '100%',sm:'100%', md:'50%'}, marginBottom:'10px' , paddingRight:{sm:0,md:'5px'}}}
+              />
+            )}
+          />
+
+        <Controller
+            name="Email"
+            control={control}
+            // defaultValue="example@dev.com"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Email"
+                variant="outlined"
+                error={!!errors.Email}
+                helperText={errors.Email ? errors.Email?.message : ''}
+                sx={{width:{xs: '100%',sm:'100%', md:'50%'}, marginBottom:'10px',paddingLeft:{sm:0,md:'5px'} }}
+                fullWidth
+                margin="dense"
+              />
+            )}
+          />
+          <Controller
+            name="Subject"
+            control={control}
+            // defaultValue="Greetings"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Message"
+                
+             
+                variant="outlined"
+                error={!!errors.Subject}
+                helperText={errors.Subject ? errors.Subject?.message : ''}
+                sx={{width: '100%', marginBottom:'10px', }}
+                fullWidth
+                margin="dense"
+              />
+            )}
+          />    
+
+        <Controller
+            name="Message"
+            control={control}
+            // defaultValue="You are awesome!!"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Message"
+                
+              multiline
+              rows={4}
+             
+                variant="outlined"
+                error={!!errors.Message}
+                helperText={errors.Message ? errors.Message?.message : ''}
+                sx={{width: '100%', marginBottom:'10px', }}
+                fullWidth
+                margin="dense"
+              />
+            )}
+          />    
+           
+            <Button type="submit" sx={{display:'flex'}}>
+              Send <Send />
+            </Button>
+        </form>
       </Box>
     </Container>
       </Box>
@@ -217,7 +368,7 @@ export default function HomeSectionFirst(
           <Box sx={{ color: 'inherit',marginTop:'30px'}} >
         <Box className="introText">
           <Grow in={checked} style={{ transformOrigin: '0 0 0' }}>
-          <Typography variant="h1"> Hi, </Typography>
+          <Typography variant="h1"> Hi,</Typography>
           </Grow>
           <Grow in={checked} style={{ transformOrigin: '0 0 0' }}
               {...(checked ? { timeout: 1000 } : {})}>
@@ -231,7 +382,7 @@ export default function HomeSectionFirst(
          
           
         </Box>
-      <Box className='subTitle'><Typography variant="subtitle1">React | React Native | Growth Hacking Enthusiast</Typography></Box>
+      <Box className='subTitle'><Typography variant="subtitle1">React | React Native | JS / TS</Typography></Box>
       <Box  sx={{marginTop:'50px', display:{sm:'flex'},  }}>
                 <Box sx={{display:{xs:'flex'}, border:'5px solid ',borderColor:'inherit', borderRadius:'20px', overflow:'hidden', alignItems:{sm:'center'}, width:{xs:'100%',sm:'auto'},marginTop:{xs:'10px',sm:'0'} }}>
                   <CustomButton variant="text" 

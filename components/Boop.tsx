@@ -9,7 +9,7 @@ const Boop = ({
   rotation = 0,
   scale = 1,
   timing = 150,
- 
+  
   springConfig = {
     tension: 300,
     friction: 10,

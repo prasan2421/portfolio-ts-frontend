@@ -42,7 +42,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { styled } from "@mui/material/styles";
 import useBreakpoint from 'use-breakpoint';
 import Move from "./Move";
-import Boop from "./Move";
+import Boop from "./Boop";
 import playstore from '../assets/images/playstore.png';
 const drawerWidth = 150;
 
@@ -96,6 +96,7 @@ export default function Layout({ children, home }: {
   
 
   const [swipabledrawer, setSwipabledrawer] = React.useState(false);
+  // const [boop, setBoop] = React.useState(true);
 
   const router = useRouter();
 
@@ -154,18 +155,22 @@ export default function Layout({ children, home }: {
               </Box>
   )
   const drawerList=(text:any)=>{
-    return(<ListItemButton selected={router.pathname == text.link}>
+    return(
+    <ListItemButton selected={router.pathname == text.link} 
+   
+    >
       
       <ListItemText primary={text.title} disableTypography={true}
       />
+       <Boop scale={1.5}  springConfig={{ tension: 150, friction: 10 }} >
       <ListItemIcon sx={{minWidth:'inherit'}}>
-      <Move y={-10}>
+     
           <CircleIcon fontSize='small'/>
-          </Move>
+          
       {/* {router.pathname == text.link ?(<CircleIcon sx={{ color: red[500], fontSize: 18  }}/>):(<CircleIcon sx={{ fontSize: 18  }} className={headerStyles.inactiveStyles}/>)} */}
 
       </ListItemIcon>
-     
+      </Boop>
     </ListItemButton>)
             
   }
